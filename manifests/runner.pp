@@ -202,12 +202,12 @@ define gitlab_ci_multi_runner::runner (
     $kubernetes_memory = undef,
     $kubernetes_service_cpus = undef,
     $kubernetes_service_memory = undef,
+    # GitLab allows runner names with problematic characters like quotes
+    # Make sure they don't trip up the shell when executed
+    $node_description = shellquote($::hostname),
 
     $require = [ Class['gitlab_ci_multi_runner'] ]
 ) {
-    # GitLab allows runner names with problematic characters like quotes
-    # Make sure they don't trip up the shell when executed
-    $node_description = shellquote($::hostname)
 
     # Here begins the arduous, manual process of taking each argument
     # and turning it into option strings.
